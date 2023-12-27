@@ -1,12 +1,12 @@
 import bot from './assets/bot.svg';
 import user from './assets/user.svg';
 
-const form = decument.querySelector('form');
+const form = document.querySelector('form');
 const chatContainer = document.querySelector('#chat_container');
 
 let loadInterval;
 
-function load(element){
+function loader(element){
   element.textContent += '.';
 
   loadInterval = setInterval(() => {
@@ -38,5 +38,53 @@ function generateUniqueId() {
 
   return `id-${timestamp}-${hexadecimalString}`;
 }
+
+function chatStrip (isAi, value, uniqueID) {
+  return (
+    `
+    <div class="wrapper ${isAi && 'ai'}">
+      <div class="chat">
+        <div className="profile">
+          <img
+            src="${isAi ? 'bot' : 'user'}"
+            alt="${isAi ? 'bot' : 'user'}"
+            />
+        </div>
+        <div class="message" id=${uniqueID}>${value}</div>
+      </div>
+    </div>
+    `
+  )
+}
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const data = new FormData(form);
+
+  // user's chatstrip
+  chatContainer.innerHTML += chatStrip(false, data.get('prompt'));
+
+  form.reset();
+
+  // bot's chatstrip
+  const uniqueID = generateUniqueId();
+  chatContainer.innerHTML += chatStrip(true, " ", uniqueID);
+
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+
+  const messageDiv = document.getElementById(uniqueID);
+
+  loader(messageDiv);
+}
+
+form.addEventListener('submit', handleSubmit);
+form.addEventListener('keyup', (e) => {
+  if (e.keyCode === 13) {
+    handleSubmit(e);
+  }
+})
+
+
  
 
