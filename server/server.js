@@ -29,7 +29,7 @@ app.post('/', async (req, res) => {
     try {
         const prompt = req.body.prompt; 
 
-        const response = await openai.chat.completions.create({
+        const response = await openai.completions.create({
             model: "text-davinci-003",
             prompt: `${prompt}`,
             temperature: 0,
