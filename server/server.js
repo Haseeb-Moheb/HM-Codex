@@ -1,7 +1,7 @@
 import express from "express";
 import * as dotenv from 'dotenv';
 import cors from 'cors';
-import OpenAIApi, { OpenAI } from 'openai'
+import { OpenAI } from 'openai';
 
 dotenv.config(); 
 
@@ -29,7 +29,7 @@ app.post('/', async (req, res) => {
     try {
         const prompt = req.body.prompt; 
 
-        const response = await openai.createCompletion({
+        const response = await openai.createChatCompletion({
             model: "text-davinci-003",
             prompt: `${prompt}`,
             temperature: 0,
@@ -40,7 +40,7 @@ app.post('/', async (req, res) => {
         });
 
         res.status(200).send({
-            bot: response.data.choices[0].text
+            bot: response.choices[0].text
         })
     } catch (error) {
         console.log(error);
