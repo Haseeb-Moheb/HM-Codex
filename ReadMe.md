@@ -6,7 +6,7 @@ With an elegant user interface that resembles the ChatGPT app, communication wit
 
 Giving it code and translating it to another programming language, and much more.
 
-This CodeGPT is the best AI-based web application that you can currently find on the market. 
+This CodeGPT is the best AI-based web application that you can currently find on the market.  
 
 Script.JS documentation:
 
